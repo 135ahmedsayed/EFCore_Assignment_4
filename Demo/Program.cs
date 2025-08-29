@@ -1,4 +1,6 @@
 ﻿using Demo.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Demo
 {
@@ -23,22 +25,33 @@ namespace Demo
             #endregion
 
             #region Grouping
-            var Results = context.Employees.GroupJoin(context.Orders, e => e.EmployeeId, o => o.EmployeeId,
-                (e, o) => new
-                {
-                    e.FirstName,
-                    e.LastName,
-                    o
-                });
-            foreach (var r in Results)
-            {
-                Console.WriteLine($"{r.FirstName} {r.LastName} ");
-                foreach (var order in r.o)
-                {
-                    Console.WriteLine($"\t{order.ShipName} {order.OrderId} {order.OrderDate}");
-                }
-            }
+            //var Results = context.Employees.GroupJoin(context.Orders, e => e.EmployeeId, o => o.EmployeeId,
+            //    (e, o) => new
+            //    {
+            //        e.FirstName,
+            //        e.LastName,
+            //        o
+            //    });
+            //foreach (var r in Results)
+            //{
+            //    Console.WriteLine($"{r.FirstName} {r.LastName} ");
+            //    foreach (var order in r.o)
+            //    {
+            //        Console.WriteLine($"\t{order.ShipName} {order.OrderId} {order.OrderDate}");
+            //    }
+            //}
             #endregion
+            //Create view
+            #region Viewing
+            context.Database.ExecuteSqlRaw(@"Create View EmployeeView
+                                   as 
+                                        select e.EmployeeId , e.FirstName ,e.LastName ,e.Address ,e.City 
+                                        from Employees e");
+
+            //context.Database.ExecuteSqlRaw(@"Drop view EmployeeView");
+            #endregion
+
+
             Console.ReadKey();
         }
     }

@@ -26,6 +26,7 @@ public partial class NorthwindContext : DbContext
         modelBuilder.ApplyConfiguration(new Configurations.OrderConfiguration());
 
         OnModelCreatingPartial(modelBuilder);
+        
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
