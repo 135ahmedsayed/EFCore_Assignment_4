@@ -43,15 +43,20 @@ namespace Demo
             #endregion
             //Create view
             #region Viewing
-            context.Database.ExecuteSqlRaw(@"Create View EmployeeView
-                                   as 
-                                        select e.EmployeeId , e.FirstName ,e.LastName ,e.Address ,e.City 
-                                        from Employees e");
+            //context.Database.ExecuteSqlRaw(@"Create View EmployeeView
+            //                       as 
+            //                           select e.EmployeeId , e.FirstName ,e.LastName ,e.Address ,e.City 
+            //                            from Employees e");
 
             //context.Database.ExecuteSqlRaw(@"Drop view EmployeeView");
             #endregion
-
-
+            #region Call Procedures
+            var result =  context.Procedures.SelectALLEmployeesAsync().GetAwaiter().GetResult();
+            foreach (var r in result)
+            {
+                Console.WriteLine($"{r.EmployeeID} {r.FirstName} {r.LastName} {r.Address} {r.City}");
+            }
+            #endregion
             Console.ReadKey();
         }
     }
